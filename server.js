@@ -3,6 +3,8 @@ const express = require("express");
 //---- FYI: BodyParser is now apart of React so no need to require it anymore
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
+// ---To handle file paths
+const path = require('path');
 
 //--- Defines all api route requests
 const items = require('./routes/api/items');
@@ -25,6 +27,16 @@ mongoose
 
 // api Use Routes Defined
 app.use('/api/items', items);
+
+// Serve static assets if in production
+if(process.env.NODE_ENV === "production") {
+    // Set static folder
+    app.use(express.static('/client/build'));
+
+    app.get('*', (req, res) => {
+        res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+    });
+}
 
 
 // Set the Port variable to the environment or localhost:5000 depending on dev environment
