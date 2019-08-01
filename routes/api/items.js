@@ -4,6 +4,7 @@ const router = express.Router();
 
 // Sets Item model to require Item variable in the model folder
 const Item = require("../../models/Item");
+const auth = require('../../middleware/auth');
 
 // @route   GET api/items
 // @desc    Get all items
@@ -16,8 +17,8 @@ router.get('/', (req, res) => {
 
 // @route   Post api/items
 // @desc    Create an Item request
-// @access  Public
-router.post('/', (req, res) => {
+// @access  Private
+router.post('/', auth, (req, res) => {
    const newItem = new Item({
        name: req.body.name
    });
@@ -26,8 +27,8 @@ router.post('/', (req, res) => {
 
 // @route   Delete api/items/:id
 // @desc    Delete Post item by ID
-// @access  Public
-router.delete('/:id', (req, res) => {
+// @access  Private
+router.delete('/:id', auth, (req, res) => {
     Item.findById(req.params.id) 
     .then(item => item.remove().then(() => res.json({success: true})))
     .catch(err => res.status(404).json({success: false}));
