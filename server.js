@@ -3,7 +3,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 // ---To handle file paths
 const path = require('path');
- const config = require('config');
+const config = require('config');
 
 //---- Setting Express to a Variable called app ----//
 const app = express();
@@ -41,7 +41,7 @@ if(process.env.NODE_ENV === "production") {
 
 
 // Set the Port variable to the environment or localhost:5000 depending on dev environment
-const PORT = process.env.PORT || 5000;
+const port = process.env.PORT || 5000;
 
 // Start port and log status
-app.listen(PORT, () => console.log(`Server is started on port: ${PORT}`));
+app.listen(port, () => console.log(`Server is started on port: ${port}`));
